@@ -63,7 +63,7 @@ public class {{namePascalCase}}Controller {
     {{#checkMethod controllerInfo.method}}
     @RequestMapping(value = "{{#aggregate}}{{nameCamelCase}}{{/aggregate}}/{id}/{{controllerInfo.apiPath}}", method = RequestMethod.{{#controllerInfo}}{{method}}{{/controllerInfo}}, produces = "application/json;charset=UTF-8")
     public {{#aggregate}}{{namePascalCase}}{{/aggregate}} {{nameCamelCase}}(        
-        @PathVariable(value = "id") {{../keyFieldDescriptor.className}} id,
+        @PathVariable(value = "id") {{../keyFieldDescriptor.className}} {{../keyFieldDescriptor.nameCamelCase}},
         @RequestBody {{namePascalCase}}Command {{nameCamelCase}}Command,
         HttpServletRequest request,
         HttpServletResponse response
