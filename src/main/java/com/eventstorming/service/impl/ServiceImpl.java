@@ -10,8 +10,13 @@ import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import {{options.package}}.domain.Complete{{namePascalCase}}Command;
-import {{options.package}}.domain.CompleteReturnCommand;
+{{#if commands}}
+{{#commands}}
+{{#if isExtendedVerb}}
+import {{../options.package}}.domain.{{namePascalCase}}Command;
+{{/if}}
+{{/commands}}
+{{/if}}
 import {{options.package}}.domain.{{namePascalCase}};
 import {{options.package}}.domain.{{namePascalCase}}Repository;
 import {{options.package}}.service.{{namePascalCase}}Service;
