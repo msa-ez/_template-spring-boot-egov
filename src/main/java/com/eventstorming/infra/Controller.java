@@ -33,7 +33,7 @@ public class {{namePascalCase}}Controller {
         return {{nameCamelCase}}Service.getAll{{#changeFistStr namePlural}}{{/changeFistStr}}();
     }
 
-    @GetMapping("/{{nameCamelCase}}/{{#keyFieldDescriptor}}{{#wrapWithBracesKeyField nameCamelCase}}{{/wrapWithBracesKeyField}}{{/keyFieldDescriptor}}")
+    @GetMapping("/{{nameCamelCase}}/{id}")
     public Optional<{{namePascalCase}}> get{{namePascalCase}}ById(@PathVariable {{#keyFieldDescriptor}}{{className}} {{nameCamelCase}}{{/keyFieldDescriptor}}) throws Exception {
         // Get a {{nameCamelCase}} by ID via {{namePascalCase}}Service
         return {{nameCamelCase}}Service.get{{namePascalCase}}ById({{#keyFieldDescriptor}}{{nameCamelCase}}{{/keyFieldDescriptor}});
@@ -45,13 +45,13 @@ public class {{namePascalCase}}Controller {
         return {{nameCamelCase}}Service.create{{namePascalCase}}({{nameCamelCase}});
     }
 
-    @PutMapping("/{{nameCamelCase}}/{{#keyFieldDescriptor}}{{#wrapWithBracesKeyField nameCamelCase}}{{/wrapWithBracesKeyField}}{{/keyFieldDescriptor}}")
+    @PutMapping("/{{nameCamelCase}}/{id}")
     public {{namePascalCase}} update{{namePascalCase}}(@PathVariable {{#keyFieldDescriptor}}{{className}} {{nameCamelCase}}{{/keyFieldDescriptor}}, @RequestBody {{namePascalCase}} {{nameCamelCase}}) throws Exception {
         // Update an existing {{nameCamelCase}} via {{namePascalCase}}Service
         return {{nameCamelCase}}Service.update{{namePascalCase}}({{nameCamelCase}});
     }
 
-    @DeleteMapping("/{{nameCamelCase}}/{{#keyFieldDescriptor}}{{#wrapWithBracesKeyField nameCamelCase}}{{/wrapWithBracesKeyField}}{{/keyFieldDescriptor}}")
+    @DeleteMapping("/{{nameCamelCase}}/{id}")
     public void delete{{namePascalCase}}(@PathVariable {{#keyFieldDescriptor}}{{className}} {{nameCamelCase}}{{/keyFieldDescriptor}}) throws Exception {
         // Delete a {{nameCamelCase}} via {{namePascalCase}}Service
         {{nameCamelCase}}Service.delete{{namePascalCase}}({{#keyFieldDescriptor}}{{nameCamelCase}}{{/keyFieldDescriptor}});
@@ -63,7 +63,7 @@ public class {{namePascalCase}}Controller {
     {{#checkMethod controllerInfo.method}}
     @RequestMapping(value = "{{#aggregate}}{{nameCamelCase}}{{/aggregate}}/{id}/{{controllerInfo.apiPath}}", method = RequestMethod.{{#controllerInfo}}{{method}}{{/controllerInfo}}, produces = "application/json;charset=UTF-8")
     public {{#aggregate}}{{namePascalCase}}{{/aggregate}} {{nameCamelCase}}(        
-        @PathVariable(value = "id") Long id,
+        @PathVariable(value = "id") {{../keyFieldDescriptor.className}} id,
         @RequestBody {{namePascalCase}}Command {{nameCamelCase}}Command,
         HttpServletRequest request,
         HttpServletResponse response
