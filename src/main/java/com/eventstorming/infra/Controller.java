@@ -60,7 +60,7 @@ public class {{namePascalCase}}Controller {
     {{#if commands}}
     {{#commands}}
     {{#if isExtendedVerb}}
-    @RequestMapping(value = "{{#aggregate}}{{#changeLowerCase nameCamelCase}}{{/changeLowerCase}}{{/aggregate}}/{id}/{{nameCamelCase}}", method = RequestMethod.{{#controllerInfo}}{{method}}{{/controllerInfo}}, produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = "{{#aggregate}}{{nameCamelCase}}{{/aggregate}}/{id}/{{#changeLowerCase nameCamelCase}}{{/changeLowerCase}}", method = RequestMethod.{{#controllerInfo}}{{method}}{{/controllerInfo}}, produces = "application/json;charset=UTF-8")
     public {{#aggregate}}{{namePascalCase}}{{/aggregate}} {{nameCamelCase}}(        
         @PathVariable(value = "id") Long id,
         @RequestBody {{namePascalCase}}Command {{nameCamelCase}}Command,
