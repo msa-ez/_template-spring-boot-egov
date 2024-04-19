@@ -28,9 +28,9 @@ public class {{namePascalCase}}Controller {
 	private {{namePascalCase}}Service {{nameCamelCase}}Service;
 
     @GetMapping("/{{nameCamelCase}}")
-    public List<{{namePascalCase}}> getAll{{#changeFistStr namePlural}}{{/changeFistStr}}() throws Exception {
+    public List<{{namePascalCase}}> getAll{{#changeFirstStr namePlural}}{{/changeFirstStr}}() throws Exception {
         // Get all {{namePlural}} via {{namePascalCase}}Service
-        return {{nameCamelCase}}Service.getAll{{#changeFistStr namePlural}}{{/changeFistStr}}();
+        return {{nameCamelCase}}Service.getAll{{#changeFirstStr namePlural}}{{/changeFirstStr}}();
     }
 
     @GetMapping("/{{nameCamelCase}}/{id}")
@@ -100,7 +100,7 @@ window.$HandleBars.registerHelper('wrapWithBracesKeyField', function (keyField) 
     return keyField;
 });
 
-window.$HandleBars.registerHelper('changeFistStr', function (name) {
+window.$HandleBars.registerHelper('changeFirstStr', function (name) {
     if (name && typeof name === 'string') {
         return name.charAt(0).toUpperCase() + name.slice(1);
     }

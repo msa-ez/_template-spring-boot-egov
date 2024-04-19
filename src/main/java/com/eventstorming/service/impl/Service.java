@@ -11,10 +11,10 @@ import java.util.Optional;
 
 public interface {{namePascalCase}}Service {    
 
-    List<{{namePascalCase}}> getAllDeliveries() throws Exception;
-    Optional<{{namePascalCase}}> getDeliveryById(Long id) throws Exception;
-    {{namePascalCase}} createDelivery({{namePascalCase}} {{nameCamelCase}}) throws Exception;
-    {{namePascalCase}} updateDelivery({{namePascalCase}} {{nameCamelCase}}) throws Exception;
+    List<{{namePascalCase}}> getAll{{#changeFirstStr namePlural}}{{/changeFirstStr}}() throws Exception;
+    Optional<{{namePascalCase}}> get{{namePascalCase}}ById(Long id) throws Exception;
+    {{namePascalCase}} create{{namePascalCase}}({{namePascalCase}} {{nameCamelCase}}) throws Exception;
+    {{namePascalCase}} update{{namePascalCase}}({{namePascalCase}} {{nameCamelCase}}) throws Exception;
     void delete{{namePascalCase}}(Long id) throws Exception;
 
 
