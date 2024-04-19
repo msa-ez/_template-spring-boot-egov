@@ -77,11 +77,11 @@ public class {{namePascalCase}}Controller {
 }
 
 <function>
-window.$HandleBars.registerHelper('changeLowerCase', function (str) {
-    if (str) {
-        return str.toLowerCase();
+window.$HandleBars.registerHelper('changeLowerCase', function (stickerName) {
+    if (stickerName) {
+        return stickerName.toLowerCase();
     }
-    return str;
+    return stickerName;
 });
 
 window.$HandleBars.registerHelper('wrapWithBracesKeyField', function (keyField) {
