@@ -60,6 +60,7 @@ public class {{namePascalCase}}Controller {
     {{#if commands}}
     {{#commands}}
     {{#if isExtendedVerb}}
+    {{#checkMethod controllerInfo.method}}
     @RequestMapping(value = "{{#aggregate}}{{nameCamelCase}}{{/aggregate}}/{id}/{{controllerInfo.apiPath}}", method = RequestMethod.{{#controllerInfo}}{{method}}{{/controllerInfo}}, produces = "application/json;charset=UTF-8")
     public {{#aggregate}}{{namePascalCase}}{{/aggregate}} {{nameCamelCase}}(        
         @PathVariable(value = "id") Long id,
@@ -71,12 +72,27 @@ public class {{namePascalCase}}Controller {
         return {{#aggregate}}{{nameCamelCase}}{{/aggregate}}Service.{{nameCamelCase}}({{nameCamelCase}}Command);
 
     }
+    {{/checkMethod}}
+    {{^checkMethod controllerInfo.method}}
+    @RequestMapping(value = "{{#aggregate}}{{nameCamelCase}}{{/aggregate}}", method = RequestMethod.{{#controllerInfo}}{{method}}{{/controllerInfo}}, produces = "application/json;charset=UTF-8")
+    public {{#aggregate}}{{namePascalCase}}{{/aggregate}} {{nameCamelCase}}(        
+        @RequestBody {{namePascalCase}}Command {{nameCamelCase}}Command,
+        HttpServletRequest request,
+        HttpServletResponse response
+    ) throws Exception {
+
+        return {{#aggregate}}{{nameCamelCase}}{{/aggregate}}Service.{{nameCamelCase}}({{nameCamelCase}}Command);
+
+    }
+    {{/checkMethod}} 
     {{/if}}
     {{/commands}}
     {{/if}}
 }
 
 <function>
+
+
 window.$HandleBars.registerHelper('wrapWithBracesKeyField', function (keyField) {
     if (keyField) {
         return `{${keyField}}`;
