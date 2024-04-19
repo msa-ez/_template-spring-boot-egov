@@ -19,8 +19,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import {{options.package}}.domain.*;
 import {{options.package}}.service.*;
 
-//<<< Clean Arch / Inbound Adaptor
-
 @RestController
 // @RequestMapping(value="/{{namePlural}}")
 @Transactional
@@ -37,32 +35,32 @@ public class {{namePascalCase}}Controller {
 
     @GetMapping("/{{nameCamelCase}}/{{#keyFieldDescriptor}}{{#wrapWithBracesKeyField nameCamelCase}}{{/wrapWithBracesKeyField}}{{/keyFieldDescriptor}}")
     public Optional<{{namePascalCase}}> get{{namePascalCase}}ById(@PathVariable {{#keyFieldDescriptor}}{{className}} {{nameCamelCase}}{{/keyFieldDescriptor}}) throws Exception {
-        // Get a delivery by ID via DeliveryService
+        // Get a {{nameCamelCase}} by ID via {{namePascalCase}}Service
         return {{nameCamelCase}}Service.get{{namePascalCase}}ById({{#keyFieldDescriptor}}{{nameCamelCase}}{{/keyFieldDescriptor}});
     }
 
     @PostMapping("/{{nameCamelCase}}")
     public {{namePascalCase}} create{{namePascalCase}}(@RequestBody {{namePascalCase}} {{nameCamelCase}}) throws Exception {
-        // Create a new delivery via {{namePascalCase}}Servcie
+        // Create a new {{nameCamelCase}} via {{namePascalCase}}Service
         return {{nameCamelCase}}Service.create{{namePascalCase}}({{nameCamelCase}});
     }
 
     @PutMapping("/{{nameCamelCase}}/{{#keyFieldDescriptor}}{{#wrapWithBracesKeyField nameCamelCase}}{{/wrapWithBracesKeyField}}{{/keyFieldDescriptor}}")
     public {{namePascalCase}} update{{namePascalCase}}(@PathVariable {{#keyFieldDescriptor}}{{className}} {{nameCamelCase}}{{/keyFieldDescriptor}}, @RequestBody {{namePascalCase}} {{nameCamelCase}}) throws Exception {
-        // Update an existing {{nameCamelCase}} via DeliveryService
+        // Update an existing {{nameCamelCase}} via {{namePascalCase}}Service
         return {{nameCamelCase}}Service.update{{namePascalCase}}({{nameCamelCase}});
     }
 
     @DeleteMapping("/{{nameCamelCase}}/{{#keyFieldDescriptor}}{{#wrapWithBracesKeyField nameCamelCase}}{{/wrapWithBracesKeyField}}{{/keyFieldDescriptor}}")
     public void delete{{namePascalCase}}(@PathVariable {{#keyFieldDescriptor}}{{className}} {{nameCamelCase}}{{/keyFieldDescriptor}}) throws Exception {
-        // Delete a delivery via DeliveryService
+        // Delete a {{nameCamelCase}} via {{namePascalCase}}Service
         {{nameCamelCase}}Service.delete{{namePascalCase}}({{#keyFieldDescriptor}}{{nameCamelCase}}{{/keyFieldDescriptor}});
     }
 
     {{#if commands}}
     {{#commands}}
     {{#if isExtendedVerb}}
-    @RequestMapping(value = "{{#aggregate}}{{nameCamelCase}}{{/aggregate}}/{id}/{{nameCamelCase}}", method = RequestMethod.{{#controllerInfo}}{{method}}{{/controllerInfo}}, produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = "{{#aggregate}}{{#changeLowerCase nameCamelCase}}{{/changeLowerCase}}{{/aggregate}}/{id}/{{nameCamelCase}}", method = RequestMethod.{{#controllerInfo}}{{method}}{{/controllerInfo}}, produces = "application/json;charset=UTF-8")
     public {{#aggregate}}{{namePascalCase}}{{/aggregate}} {{nameCamelCase}}(        
         @PathVariable(value = "id") Long id,
         @RequestBody {{namePascalCase}}Command {{nameCamelCase}}Command,
@@ -77,9 +75,15 @@ public class {{namePascalCase}}Controller {
     {{/commands}}
     {{/if}}
 }
-//>>> Clean Arch / Inbound Adaptor
 
 <function>
+window.$HandleBars.registerHelper('changeLowerCase', function (str) {
+    if (str) {
+        return str.toLowerCase();
+    }
+    return str;
+});
+
 window.$HandleBars.registerHelper('wrapWithBracesKeyField', function (keyField) {
     if (keyField) {
         return `{${keyField}}`;
