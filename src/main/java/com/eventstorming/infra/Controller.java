@@ -5,116 +5,95 @@ path: {{boundedContext.name}}/{{{options.packagePath}}}/infra
 mergeType: template
 ---
 package {{options.package}}.infra;
-import {{options.package}}.domain.*;
-
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
 import java.util.Optional;
 
+import org.springframework.web.bind.annotation.*;
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.transaction.Transactional;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+
+import {{options.package}}.domain.*;
+import {{options.package}}.service.*;
 
 //<<< Clean Arch / Inbound Adaptor
 
 @RestController
 // @RequestMapping(value="/{{namePlural}}")
 @Transactional
-public class {{ namePascalCase }}Controller {
-    @Autowired
-    {{namePascalCase}}Repository {{nameCamelCase}}Repository;
+public class {{namePascalCase}}Controller {
 
-    {{#if (checkGeneralization aggregateRoot.entities.relations nameCamelCase)}}
-    {{#each aggregateRoot.entities.relations}}
-    {{#if (isGeneralization targetElement.namePascalCase ../namePascalCase relationType)}}
-    @Autowired
-    {{sourceElement.namePascalCase}}Repository {{sourceElement.nameCamelCase}}Repository;
-    {{/if}}
-    {{/each}}
-    {{/if}}
+    @Resource(name = "{{nameCamelCase}}Service")
+	private {{namePascalCase}}Service {{nameCamelCase}}Service;
 
+    @GetMapping("/{{nameCamelCase}}")
+    public List<{{namePascalCase}}> getAll{{#changeFistStr namePlural}}{{/changeFistStr}}() throws Exception {
+        // Get all {{namePlural}} via {{namePascalCase}}Service
+        return {{nameCamelCase}}Service.getAll{{#changeFistStr namePlural}}{{/changeFistStr}}();
+    }
+
+    @GetMapping("/{{nameCamelCase}}/{{#keyFieldDescriptor}}{{#wrapWithBracesKeyField nameCamelCase}}{{/wrapWithBracesKeyField}}{{/keyFieldDescriptor}}")
+    public Optional<{{namePascalCase}}> get{{namePascalCase}}ById(@PathVariable {{#keyFieldDescriptor}}{{className}} {{nameCamelCase}}{{/keyFieldDescriptor}}) throws Exception {
+        // Get a delivery by ID via DeliveryService
+        return {{nameCamelCase}}Service.get{{namePascalCase}}ById({{#keyFieldDescriptor}}{{nameCamelCase}}{{/keyFieldDescriptor}});
+    }
+
+    @PostMapping("/{{nameCamelCase}}")
+    public {{namePascalCase}} create{{namePascalCase}}(@RequestBody {{namePascalCase}} {{nameCamelCase}}) throws Exception {
+        // Create a new delivery via {{namePascalCase}}Servcie
+        return {{nameCamelCase}}Service.create{{namePascalCase}}({{nameCamelCase}});
+    }
+
+    @PutMapping("/{{nameCamelCase}}/{{#keyFieldDescriptor}}{{#wrapWithBracesKeyField nameCamelCase}}{{/wrapWithBracesKeyField}}{{/keyFieldDescriptor}}")
+    public {{namePascalCase}} update{{namePascalCase}}(@PathVariable {{#keyFieldDescriptor}}{{className}} {{nameCamelCase}}{{/keyFieldDescriptor}}, @RequestBody {{namePascalCase}} {{nameCamelCase}}) throws Exception {
+        // Update an existing {{nameCamelCase}} via DeliveryService
+        return {{nameCamelCase}}Service.update{{namePascalCase}}({{nameCamelCase}});
+    }
+
+    @DeleteMapping("/{{nameCamelCase}}/{{#keyFieldDescriptor}}{{#wrapWithBracesKeyField nameCamelCase}}{{/wrapWithBracesKeyField}}{{/keyFieldDescriptor}}")
+    public void delete{{namePascalCase}}(@PathVariable {{#keyFieldDescriptor}}{{className}} {{nameCamelCase}}{{/keyFieldDescriptor}}) throws Exception {
+        // Delete a delivery via DeliveryService
+        {{nameCamelCase}}Service.delete{{namePascalCase}}({{#keyFieldDescriptor}}{{nameCamelCase}}{{/keyFieldDescriptor}});
+    }
+
+    {{#if commands}}
     {{#commands}}
-    {{#isRestRepository}}
-    {{/isRestRepository}}
+    {{#if isExtendedVerb}}
+    @RequestMapping(value = "{{#aggregate}}{{nameCamelCase}}{{/aggregate}}/{id}/{{nameCamelCase}}", method = RequestMethod.{{#controllerInfo}}{{method}}{{/controllerInfo}}, produces = "application/json;charset=UTF-8")
+    public {{#aggregate}}{{namePascalCase}}{{/aggregate}} {{nameCamelCase}}(        
+        @PathVariable(value = "id") Long id,
+        @RequestBody {{namePascalCase}}Command {{nameCamelCase}}Command,
+        HttpServletRequest request,
+        HttpServletResponse response
+    ) throws Exception {
 
-    {{^isRestRepository}}
-    {{#checkMethod controllerInfo.method}}
-    @RequestMapping(value = "{{../namePlural}}/{id}/{{controllerInfo.apiPath}}",
-        method = RequestMethod.{{controllerInfo.method}},
-        produces = "application/json;charset=UTF-8")
-    public {{../namePascalCase}} {{nameCamelCase}}(@PathVariable(value = "id") {{../keyFieldDescriptor.className}} id, {{#if (hasFields fieldDescriptors)}}@RequestBody {{namePascalCase}}Command {{nameCamelCase}}Command, {{/if}}HttpServletRequest request, HttpServletResponse response) throws Exception {
-            System.out.println("##### /{{../nameCamelCase}}/{{nameCamelCase}}  called #####");
-            Optional<{{../namePascalCase}}> optional{{../namePascalCase}} = {{../nameCamelCase}}Repository.findById(id);
-            
-            optional{{../namePascalCase}}.orElseThrow(()-> new Exception("No Entity Found"));
-            {{../namePascalCase}} {{../nameCamelCase}} = optional{{../namePascalCase}}.get();
-            {{../nameCamelCase}}.{{nameCamelCase}}({{#if (hasFields fieldDescriptors)}}{{nameCamelCase}}Command{{/if}});
-            
-            {{../nameCamelCase}}Repository.{{#methodConvert controllerInfo.method}}{{/methodConvert}}({{../nameCamelCase}});
-            return {{../nameCamelCase}};
-            
-    }
-    
-    {{#each ../aggregateRoot.entities.relations}}
-    {{#if (isGeneralization targetElement.namePascalCase ../../namePascalCase relationType)}}
-    @RequestMapping(value = "{{#toURL sourceElement.nameCamelCase}}{{/toURL}}/{id}/{{../controllerInfo.apiPath}}",
-            method = RequestMethod.{{../controllerInfo.method}},
-            produces = "application/json;charset=UTF-8")
-    public {{../../namePascalCase}} {{../nameCamelCase}}{{sourceElement.namePascalCase}}(
-        @PathVariable(value = "id") {{../../keyFieldDescriptor.className}} id, {{#if (hasFields ../fieldDescriptors)}}@RequestBody {{../namePascalCase}}Command {{../nameCamelCase}}Command, {{/if}}HttpServletRequest request, HttpServletResponse response) throws Exception {
-            return {{../nameCamelCase}}(id, {{#if (hasFields ../fieldDescriptors)}}{{../nameCamelCase}}Command,{{/if}} request, response);
+        return {{#aggregate}}{{nameCamelCase}}{{/aggregate}}Service.{{nameCamelCase}}({{nameCamelCase}}Command);
+
     }
     {{/if}}
-    {{/each}}
-
-    {{/checkMethod}}
-
-    {{^checkMethod controllerInfo.method}}
-    @RequestMapping(value = "{{../namePlural}}/{{controllerInfo.apiPath}}",
-            method = RequestMethod.{{controllerInfo.method}},
-            produces = "application/json;charset=UTF-8")
-    public {{../namePascalCase}} {{nameCamelCase}}(HttpServletRequest request, HttpServletResponse response, 
-        {{#if fieldDescriptors}}@RequestBody {{aggregate.namePascalCase}} {{aggregate.nameCamelCase}}{{/if}}) throws Exception {
-            System.out.println("##### /{{aggregate.nameCamelCase}}/{{nameCamelCase}}  called #####");
-            {{aggregate.nameCamelCase}}.{{nameCamelCase}}({{#if fieldDescriptors}}{{nameCamelCase}}command{{/if}});
-            {{aggregate.nameCamelCase}}Repository.save({{aggregate.nameCamelCase}});
-            return {{aggregate.nameCamelCase}};
-    }
-    {{/checkMethod}}    
-    {{/isRestRepository}}
     {{/commands}}
-
-    {{#if (checkGeneralization aggregateRoot.entities.relations nameCamelCase)}}
-    {{#each aggregateRoot.entities.relations}}
-    {{#if (isGeneralization targetElement.namePascalCase ../namePascalCase relationType)}}
-    {{#sourceElement.operations}}
-    {{^isOverride}}
-    @RequestMapping(value = "{{#toURL ../sourceElement.nameCamelCase}}{{/toURL}}/{id}/{{name}}",
-        method = RequestMethod.PUT,
-        produces = "application/json;charset=UTF-8")
-    public {{../sourceElement.namePascalCase}} {{name}}(@PathVariable(value = "id") {{../targetElement.keyFieldDescriptor.className}}id, HttpServletRequest request, HttpServletResponse response) throws Exception {
-            System.out.println("##### /{{../sourceElement.nameCamelCase}}/{{name}}  called #####");
-            Optional<{{../sourceElement.namePascalCase}}> optional{{../sourceElement.namePascalCase}} = {{../sourceElement.nameCamelCase}}Repository.findById(id);
-            
-            optional{{../sourceElement.namePascalCase}}.orElseThrow(()-> new Exception("No Entity Found"));
-            {{../sourceElement.namePascalCase}} {{../sourceElement.nameCamelCase}} = optional{{../sourceElement.namePascalCase}}.get();
-            {{../sourceElement.namePascalCase}}.{{name}}({{#if (hasFields fieldDescriptors)}}{{name}}Command{{/if}});
-            
-            {{../sourceElement.nameCamelCase}}Repository.save({{../sourceElement.nameCamelCase}});
-            return {{../sourceElement.nameCamelCase}};
-            
-    }
-    {{/isOverride}}
-    {{/sourceElement.operations}}
-    {{/if}}
-    {{/each}}
     {{/if}}
 }
 //>>> Clean Arch / Inbound Adaptor
 
 <function>
+window.$HandleBars.registerHelper('wrapWithBracesKeyField', function (keyField) {
+    if (keyField) {
+        return `{${keyField}}`;
+    }
+    return keyField;
+});
+
+window.$HandleBars.registerHelper('changeFistStr', function (name) {
+    if (name && typeof name === 'string') {
+        return name.charAt(0).toUpperCase() + name.slice(1);
+    }
+    return name;
+});
+
 window.$HandleBars.registerHelper('isGeneralization', function (toName, name, type) {
     try {
         if(toName == null || name == null || type == null) {
