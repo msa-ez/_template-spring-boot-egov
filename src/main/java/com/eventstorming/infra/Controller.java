@@ -7,6 +7,7 @@ mergeType: template
 package {{options.package}}.infra;
 import java.util.Optional;
 
+import java.util.List;
 import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;

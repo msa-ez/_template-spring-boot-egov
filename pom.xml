@@ -110,7 +110,6 @@
 			<artifactId>org.egovframe.rte.fdl.property</artifactId>
 			<version>${org.egovframe.rte.version}</version>
 		</dependency>
-	</dependencies>
 
 		<!-- cucumber test -->
 		<dependency>
