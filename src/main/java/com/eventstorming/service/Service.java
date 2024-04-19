@@ -5,7 +5,7 @@ mergeType: template
 ---
 package {{options.package}}.service;
 
-import stmall.domain.*;
+import {{options.package}}.domain.*;
 import java.util.List;
 import java.util.Optional;
 
