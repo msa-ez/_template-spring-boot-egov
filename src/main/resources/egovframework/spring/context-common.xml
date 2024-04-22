@@ -1,6 +1,6 @@
 forEach: BoundedContext
 fileName: context-common.xml
-path: {{boundedContext.name}}/resources/egovframework/spring
+path: {{boundedContext.name}}/src/main/resources/egovframework/spring
 ---
 
 <?xml version="1.0" encoding="UTF-8"?>
