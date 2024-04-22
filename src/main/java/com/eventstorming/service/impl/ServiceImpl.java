@@ -2,7 +2,7 @@ forEach: Aggregate
 fileName: {{namePascalCase}}ServiceImpl.java
 path: {{boundedContext.name}}/{{{options.packagePath}}}/service/impl
 ---
-package {{options.package}}.impl;
+package {{options.package}}.service.impl;
 
 import java.util.List;
 import java.util.Optional;
