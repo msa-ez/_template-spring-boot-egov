@@ -22,6 +22,7 @@ public class {{namePascalCase}} {{#checkExtends relations namePascalCase}}{{/che
     {{#isLob}}@Lob{{/isLob}}
     {{#if (isPrimitive className)}}{{#isList}}@ElementCollection{{/isList}}{{/if}}
     {{#checkRelations ../relations className isVO}} {{/checkRelations}}
+    {{#if isKey}}@Id{{/if}}
     private {{{className}}} {{nameCamelCase}};
     {{/fieldDescriptors}}
 
