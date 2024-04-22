@@ -1,8 +1,8 @@
 forEach: Aggregate
 fileName: {{namePascalCase}}ServiceImpl.java
 path: {{boundedContext.name}}/{{{options.packagePath}}}/service/impl
-mergeType: template
 ---
+package {{options.package}}.infra;
 
 import java.util.List;
 import java.util.Optional;
