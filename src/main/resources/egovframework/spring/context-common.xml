@@ -1,3 +1,4 @@
+forEach: BoundedContext
 path: {{boundedContext.name}}/resources/egovframework/spring
 ---
 
