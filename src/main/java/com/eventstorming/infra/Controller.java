@@ -62,7 +62,7 @@ public class {{namePascalCase}}Controller {
     {{#commands}}
     {{#if isExtendedVerb}}
     {{#checkMethod controllerInfo.method}}
-    @RequestMapping(value = "{{#aggregate}}{{nameCamelCase}}{{/aggregate}}/{id}/{{controllerInfo.apiPath}}", method = RequestMethod.{{#controllerInfo}}{{method}}{{/controllerInfo}}, produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = "{{#aggregate}}{{nameCamelCase}}{{/aggregate}}/{id}/{{#if controllerInfo.apiPath}}{{controllerInfo.apiPath}}{{else}}{{#changeLowerCase nameCamelCase}}{{/changeLowerCase}}{{/if}}", method = RequestMethod.{{#controllerInfo}}{{method}}{{/controllerInfo}}, produces = "application/json;charset=UTF-8")
     public {{#aggregate}}{{namePascalCase}}{{/aggregate}} {{nameCamelCase}}(        
         @PathVariable(value = "id") {{../keyFieldDescriptor.className}} {{../keyFieldDescriptor.nameCamelCase}},
         @RequestBody {{namePascalCase}}Command {{nameCamelCase}}Command,
@@ -92,7 +92,12 @@ public class {{namePascalCase}}Controller {
 }
 
 <function>
-
+window.$HandleBars.registerHelper('changeLowerCase', function (str) {
+    if (str) {
+        return str.toLowerCase();
+    }
+    return str;
+});
 
 window.$HandleBars.registerHelper('wrapWithBracesKeyField', function (keyField) {
     if (keyField) {
