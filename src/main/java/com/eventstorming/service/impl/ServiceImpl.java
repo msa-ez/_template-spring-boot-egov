@@ -42,9 +42,9 @@ public class {{namePascalCase}}ServiceImpl extends EgovAbstractServiceImpl imple
     }
 
     @Override
-    public Optional<{{namePascalCase}}> get{{namePascalCase}}ById(Long id) throws Exception {
+    public Optional<{{namePascalCase}}> get{{namePascalCase}}ById({{#keyFieldDescriptor}}{{className}} {{nameCamelCase}}{{/keyFieldDescriptor}}) throws Exception {
         // Get a {{nameCamelCase}} by ID
-        return {{nameCamelCase}}Repository.findById(id);
+        return {{nameCamelCase}}Repository.findById({{#keyFieldDescriptor}}{{nameCamelCase}}{{/keyFieldDescriptor}});
     }
 
     @Override
@@ -56,7 +56,7 @@ public class {{namePascalCase}}ServiceImpl extends EgovAbstractServiceImpl imple
     @Override
     public {{namePascalCase}} update{{namePascalCase}}({{namePascalCase}} {{nameCamelCase}})  throws Exception {
         // Update an existing {{nameCamelCase}} via {{namePascalCase}}Service
-        if ({{nameCamelCase}}Repository.existsById({{nameCamelCase}}.getId())) {
+        if ({{nameCamelCase}}Repository.existsById({{nameCamelCase}}.get{{#keyFieldDescriptor}}{{nameCamelCase}}{{/keyFieldDescriptor}}())) {
             return {{nameCamelCase}}Repository.save({{nameCamelCase}});
         } else {
             throw processException("info.nodata.msg");

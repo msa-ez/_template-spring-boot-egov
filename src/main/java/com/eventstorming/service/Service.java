@@ -12,10 +12,10 @@ import java.util.Optional;
 public interface {{namePascalCase}}Service {    
 
     List<{{namePascalCase}}> getAll{{#changeFirstStr namePlural}}{{/changeFirstStr}}() throws Exception;
-    Optional<{{namePascalCase}}> get{{namePascalCase}}ById(Long id) throws Exception;
+    Optional<{{namePascalCase}}> get{{namePascalCase}}ById({{#keyFieldDescriptor}}{{className}} {{nameCamelCase}}{{/keyFieldDescriptor}}) throws Exception;
     {{namePascalCase}} create{{namePascalCase}}({{namePascalCase}} {{nameCamelCase}}) throws Exception;
     {{namePascalCase}} update{{namePascalCase}}({{namePascalCase}} {{nameCamelCase}}) throws Exception;
-    void delete{{namePascalCase}}(Long id) throws Exception;
+    void delete{{namePascalCase}}({{#keyFieldDescriptor}}{{className}} {{nameCamelCase}}{{/keyFieldDescriptor}}) throws Exception;
 
 
     {{#if commands}}
