@@ -56,7 +56,7 @@ public class {{namePascalCase}}ServiceImpl extends EgovAbstractServiceImpl imple
     @Override
     public {{namePascalCase}} update{{namePascalCase}}({{namePascalCase}} {{nameCamelCase}})  throws Exception {
         // Update an existing {{nameCamelCase}} via {{namePascalCase}}Service
-        if ({{nameCamelCase}}Repository.existsById({{nameCamelCase}}.get{{#keyFieldDescriptor}}{{nameCamelCase}}{{/keyFieldDescriptor}}())) {
+        if ({{nameCamelCase}}Repository.existsById({{nameCamelCase}}.get{{#keyFieldDescriptor}}{{namePascalCase}}{{/keyFieldDescriptor}}())) {
             return {{nameCamelCase}}Repository.save({{nameCamelCase}});
         } else {
             throw processException("info.nodata.msg");
