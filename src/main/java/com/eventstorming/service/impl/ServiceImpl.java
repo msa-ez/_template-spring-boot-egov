@@ -95,6 +95,7 @@ public class {{namePascalCase}}ServiceImpl extends EgovAbstractServiceImpl imple
         /** Choice 2:  call the domain method of the {{../namePascalCase}}.   
         return {{../namePascalCase}}.{{nameCamelCase}}({{nameCamelCase}}Command);
            */  
+        return null;
     }
     {{/if}}
     {{/commands}}
