@@ -77,7 +77,7 @@ public class {{namePascalCase}}ServiceImpl extends EgovAbstractServiceImpl imple
 
         // You can implement logic here, or call the domain method of the {{#aggregate}}{{namePascalCase}}{{/aggregate}}.
         
-        /** Choice 1:  implement logic here        
+        /** Option 1:  implement logic here        
         Optional<{{../namePascalCase}}> optional{{../namePascalCase}} = {{../nameCamelCase}}Repository.findById({{nameCamelCase}}Command.get{{../namePascalCase}}Id());
 
         if (optional{{../namePascalCase}}.isPresent()) {
@@ -92,7 +92,7 @@ public class {{namePascalCase}}ServiceImpl extends EgovAbstractServiceImpl imple
         }
        
 
-        /** Choice 2:  call the domain method of the {{../namePascalCase}}.   
+        /** Option 2:  call the domain method of the {{../namePascalCase}}.   
         return {{../namePascalCase}}.{{nameCamelCase}}({{nameCamelCase}}Command);
            */  
         return null;
