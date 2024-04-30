@@ -44,7 +44,7 @@ public class PolicyHandler{
         */
             
         // call Service Logic //
-        {{#../aggregates}}{{nameCamelCase}}{{/../aggregates}}Service.{{nameCamelCase}}({{#outgoingCommandInfo}}{{commandValue.nameCamelCase}}Command{{/outgoingCommandInfo}});
+        {{#../aggregates}}{{nameCamelCase}}{{/../aggregates}}Service.{{#outgoingCommandInfo}}{{commandValue.nameCamelCase}}{{/outgoingCommandInfo}}({{#outgoingCommandInfo}}{{commandValue.nameCamelCase}}Command{{/outgoingCommandInfo}});
     }
     {{else}}
 
