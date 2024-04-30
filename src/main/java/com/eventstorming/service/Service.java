@@ -17,7 +17,6 @@ public interface {{namePascalCase}}Service {
     {{namePascalCase}} update{{namePascalCase}}({{namePascalCase}} {{nameCamelCase}}) throws Exception;
     void delete{{namePascalCase}}({{#keyFieldDescriptor}}{{className}} {{nameCamelCase}}{{/keyFieldDescriptor}}) throws Exception;
 
-
     {{#if commands}}
     {{#commands}}
     {{#if isExtendedVerb}}
@@ -25,6 +24,14 @@ public interface {{namePascalCase}}Service {
     {{/if}}
     {{/commands}}
     {{/if}}
+    
+    {{#boundedContext}}
+    {{#policies}}
+    {{#if outgoingCommandInfo}}
+    {{#../aggregates}}{{namePascalCase}}{{/../aggregates}} {{#outgoingCommandInfo}}{{commandValue.nameCamelCase}}({{commandValue.namePascalCase}}Command {{commandValue.nameCamelCase}}Command){{/outgoingCommandInfo}} throws Exception;
+    {{/if}}
+    {{/policies}}
+    {{/boundedContext}}
 }
 
 <function>
