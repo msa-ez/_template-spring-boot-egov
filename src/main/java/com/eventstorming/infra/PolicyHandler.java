@@ -32,17 +32,17 @@ public class PolicyHandler{
     {{#policies}}
     {{#if outgoingCommandInfo}}
     @StreamListener(value = KafkaProcessor.INPUT, condition = "headers['type']=='{{#relationEventInfo}}{{eventValue.namePascalCase}}{{/relationEventInfo}}'")
-        public void whenever{{#relationEventInfo}}{{eventValue.namePascalCase}}{{/relationEventInfo}}_{{namePascalCase}} (@Payload {{#relationEventInfo}}{{eventValue.namePascalCase}}{{/relationEventInfo}} {{#relationEventInfo}}{{eventValue.nameCamelCase}}{{/relationEventInfo}}) throws Exception {
-            {{#outgoingCommandInfo}}{{commandValue.namePascalCase}}Command{{/outgoingCommandInfo}} {{#outgoingCommandInfo}}{{commandValue.nameCamelCase}}Command{{/outgoingCommandInfo}} = new {{#outgoingCommandInfo}}{{commandValue.namePascalCase}}Command{{/outgoingCommandInfo}};
-            /** complete {{#outgoingCommandInfo}}{{commandValue.nameCamelCase}}Command{{/outgoingCommandInfo}}
-            {{#outgoingCommandInfo}}{{commandValue.nameCamelCase}}Command{{/outgoingCommandInfo}}.set???({{#relationEventInfo}}{{eventValue.nameCamelCase}}{{/relationEventInfo}}.get??());
-            */
+    public void whenever{{#relationEventInfo}}{{eventValue.namePascalCase}}{{/relationEventInfo}}_{{namePascalCase}} (@Payload {{#relationEventInfo}}{{eventValue.namePascalCase}}{{/relationEventInfo}} {{#relationEventInfo}}{{eventValue.nameCamelCase}}{{/relationEventInfo}}) throws Exception {
+        {{#outgoingCommandInfo}}{{commandValue.namePascalCase}}Command{{/outgoingCommandInfo}} {{#outgoingCommandInfo}}{{commandValue.nameCamelCase}}Command{{/outgoingCommandInfo}} = new {{#outgoingCommandInfo}}{{commandValue.namePascalCase}}Command{{/outgoingCommandInfo}};
+        /** complete {{#outgoingCommandInfo}}{{commandValue.nameCamelCase}}Command{{/outgoingCommandInfo}}
+        {{#outgoingCommandInfo}}{{commandValue.nameCamelCase}}Command{{/outgoingCommandInfo}}.set???({{#relationEventInfo}}{{eventValue.nameCamelCase}}{{/relationEventInfo}}.get??());
+        */
             
-            // call Service Logic //
-            {{#../aggregates}}{{nameCamelCase}}{{/../aggregates}}Service.{{nameCamelCase}}({{#outgoingCommandInfo}}{{commandValue.nameCamelCase}}Command{{/outgoingCommandInfo}});
+        // call Service Logic //
+        {{#../aggregates}}{{nameCamelCase}}{{/../aggregates}}Service.{{nameCamelCase}}({{#outgoingCommandInfo}}{{commandValue.nameCamelCase}}Command{{/outgoingCommandInfo}});
     }
     {{else}}
-    
+
     {{#relationEventInfo}}
     @StreamListener(value=KafkaProcessor.INPUT, condition="headers['type']=='{{eventValue.namePascalCase}}'")
     public void whenever{{eventValue.namePascalCase}}_{{../namePascalCase}}(@Payload {{eventValue.namePascalCase}} {{eventValue.nameCamelCase}}){
