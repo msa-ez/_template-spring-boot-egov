@@ -58,7 +58,22 @@ public class PolicyHandler{
         {{/relationEventInfo}}
 
     {{/policies}}
-}
+
+    {{#policies}}
+    {{#if outgoingCommandInfo}}
+    @StreamListener(value = KafkaProcessor.INPUT, condition = "headers['type']=='{{#relationEventInfo}}{{eventValue.namePascalCase}}{{/relationEventInfo}}'")
+        public void whenever{{#relationEventInfo}}{{eventValue.namePascalCase}}{{/relationEventInfo}}_{{namePascalCase}} (@Payload {{#relationEventInfo}}{{eventValue.namePascalCase}}{{/relationEventInfo}} {{#relationEventInfo}}{{eventValue.nameCamelCase}}{{/relationEventInfo}}) throws Exception {
+            {{#outgoingCommandInfo}}{{commandValue.namePascalCase}}Command{{/outgoingCommandInfo}} {{#outgoingCommandInfo}}{{commandValue.nameCamelCase}}Command{{/outgoingCommandInfo}} = new {{#outgoingCommandInfo}}{{commandValue.namePascalCase}}Command{{/outgoingCommandInfo}};
+            /** complete {{#outgoingCommandInfo}}{{commandValue.nameCamelCase}}Command{{/outgoingCommandInfo}}
+            {{#outgoingCommandInfo}}{{commandValue.nameCamelCase}}Command{{/outgoingCommandInfo}}.set???({{#relationEventInfo}}{{eventValue.nameCamelCase}}{{/relationEventInfo}}.get??());
+            */
+            
+            // call Service Logic //
+            {{#../aggregates}}{{nameCamelCase}}{{/../aggregates}}Service.{{nameCamelCase}}({{#outgoingCommandInfo}}{{commandValue.nameCamelCase}}Command{{/outgoingCommandInfo}});
+        }
+    {{commandValue}}
+    {{/if}}
+    {{/policies}}
 
 //>>> Clean Arch / Inbound Adaptor
 
