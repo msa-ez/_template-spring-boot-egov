@@ -47,7 +47,6 @@ public class PolicyHandler{
     @StreamListener(value=KafkaProcessor.INPUT, condition="headers['type']=='{{eventValue.namePascalCase}}'")
     public void whenever{{eventValue.namePascalCase}}_{{../namePascalCase}}(@Payload {{eventValue.namePascalCase}} {{eventValue.nameCamelCase}}){
         {{eventValue.namePascalCase}} event = {{eventValue.nameCamelCase}};
-        System.out.println("\n\n##### listener {{../namePascalCase}} : " + {{eventValue.nameCamelCase}} + "\n\n");
 
         {{#../relationAggregateInfo}}
         // REST Request Sample
