@@ -40,8 +40,9 @@ public class PolicyHandler{
             
             // call Service Logic //
             {{#../aggregates}}{{nameCamelCase}}{{/../aggregates}}Service.{{nameCamelCase}}({{#outgoingCommandInfo}}{{commandValue.nameCamelCase}}Command{{/outgoingCommandInfo}});
-        }
+    }
     {{else}}
+    
     {{#relationEventInfo}}
     @StreamListener(value=KafkaProcessor.INPUT, condition="headers['type']=='{{eventValue.namePascalCase}}'")
     public void whenever{{eventValue.namePascalCase}}_{{../namePascalCase}}(@Payload {{eventValue.namePascalCase}} {{eventValue.nameCamelCase}}){
