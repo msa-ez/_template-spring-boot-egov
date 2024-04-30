@@ -30,36 +30,6 @@ public class PolicyHandler{
     public void whatever(@Payload String eventString){}
 
     {{#policies}}
-    {{#relationEventInfo}}
-    @StreamListener(value=KafkaProcessor.INPUT, condition="headers['type']=='{{eventValue.namePascalCase}}'")
-    public void whenever{{eventValue.namePascalCase}}_{{../namePascalCase}}(@Payload {{eventValue.namePascalCase}} {{eventValue.nameCamelCase}}){
-
-        {{eventValue.namePascalCase}} event = {{eventValue.nameCamelCase}};
-        System.out.println("\n\n##### listener {{../namePascalCase}} : " + {{eventValue.nameCamelCase}} + "\n\n");
-
-        {{#../relationAggregateInfo}}
-        // REST Request Sample
-        
-        // {{aggregateValue.nameCamelCase}}Service.get{{aggregateValue.namePascalCase}}(/** mapping value needed */);
-
-        {{/../relationAggregateInfo}}
-
-        {{#todo ../description}}{{/todo}}
-
-        // Sample Logic //
-        {{#../aggregateList}}
-        {{namePascalCase}}.{{../../nameCamelCase}}(event);
-        
-        {{/../aggregateList}}
-
-        
-
-    }
-        {{/relationEventInfo}}
-
-    {{/policies}}
-
-    {{#policies}}
     {{#if outgoingCommandInfo}}
     @StreamListener(value = KafkaProcessor.INPUT, condition = "headers['type']=='{{#relationEventInfo}}{{eventValue.namePascalCase}}{{/relationEventInfo}}'")
         public void whenever{{#relationEventInfo}}{{eventValue.namePascalCase}}{{/relationEventInfo}}_{{namePascalCase}} (@Payload {{#relationEventInfo}}{{eventValue.namePascalCase}}{{/relationEventInfo}} {{#relationEventInfo}}{{eventValue.nameCamelCase}}{{/relationEventInfo}}) throws Exception {
@@ -71,7 +41,25 @@ public class PolicyHandler{
             // call Service Logic //
             {{#../aggregates}}{{nameCamelCase}}{{/../aggregates}}Service.{{nameCamelCase}}({{#outgoingCommandInfo}}{{commandValue.nameCamelCase}}Command{{/outgoingCommandInfo}});
         }
-    {{commandValue}}
+    {{else}}
+    {{#relationEventInfo}}
+    @StreamListener(value=KafkaProcessor.INPUT, condition="headers['type']=='{{eventValue.namePascalCase}}'")
+    public void whenever{{eventValue.namePascalCase}}_{{../namePascalCase}}(@Payload {{eventValue.namePascalCase}} {{eventValue.nameCamelCase}}){
+        {{eventValue.namePascalCase}} event = {{eventValue.nameCamelCase}};
+        System.out.println("\n\n##### listener {{../namePascalCase}} : " + {{eventValue.nameCamelCase}} + "\n\n");
+
+        {{#../relationAggregateInfo}}
+        // REST Request Sample
+        
+        // {{aggregateValue.nameCamelCase}}Service.get{{aggregateValue.namePascalCase}}(/** mapping value needed */);
+        {{/../relationAggregateInfo}}
+        {{#todo ../description}}{{/todo}}
+        // Sample Logic //
+        {{#../aggregateList}}
+        {{namePascalCase}}.{{../../nameCamelCase}}(event);
+        {{/../aggregateList}}
+    }
+    {{/relationEventInfo}}
     {{/if}}
     {{/policies}}
 
