@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.transaction.Transactional;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -22,7 +21,6 @@ import {{options.package}}.service.*;
 
 @RestController
 // @RequestMapping(value="/{{namePlural}}")
-@Transactional
 public class {{namePascalCase}}Controller {
 
     @Resource(name = "{{nameCamelCase}}Service")
