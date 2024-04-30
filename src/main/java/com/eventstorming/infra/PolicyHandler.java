@@ -25,6 +25,11 @@ public class PolicyHandler{
     {{#aggregates}}
     @Autowired {{namePascalCase}}Repository {{nameCamelCase}}Repository;
     {{/aggregates}}
+
+    {{#aggregates}}
+    @Resource(name = "{{nameCamelCase}}Service")
+    private {{namePascalCase}}Service {{nameCamelCase}}Service;
+    {{/aggregates}}
     
     @StreamListener(KafkaProcessor.INPUT)
     public void whatever(@Payload String eventString){}
