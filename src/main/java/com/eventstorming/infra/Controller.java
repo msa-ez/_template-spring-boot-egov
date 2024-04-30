@@ -26,31 +26,31 @@ public class {{namePascalCase}}Controller {
     @Resource(name = "{{nameCamelCase}}Service")
 	private {{namePascalCase}}Service {{nameCamelCase}}Service;
 
-    @GetMapping("/{{nameCamelCase}}")
+    @GetMapping("/{{namePlural}}")
     public List<{{namePascalCase}}> getAll{{#changeFirstStr namePlural}}{{/changeFirstStr}}() throws Exception {
         // Get all {{namePlural}} via {{namePascalCase}}Service
         return {{nameCamelCase}}Service.getAll{{#changeFirstStr namePlural}}{{/changeFirstStr}}();
     }
 
-    @GetMapping("/{{nameCamelCase}}/{id}")
+    @GetMapping("/{{namePlural}}/{id}")
     public Optional<{{namePascalCase}}> get{{namePascalCase}}ById(@PathVariable {{#keyFieldDescriptor}}{{className}} {{nameCamelCase}}{{/keyFieldDescriptor}}) throws Exception {
         // Get a {{nameCamelCase}} by ID via {{namePascalCase}}Service
         return {{nameCamelCase}}Service.get{{namePascalCase}}ById({{#keyFieldDescriptor}}{{nameCamelCase}}{{/keyFieldDescriptor}});
     }
 
-    @PostMapping("/{{nameCamelCase}}")
+    @PostMapping("/{{namePlural}}")
     public {{namePascalCase}} create{{namePascalCase}}(@RequestBody {{namePascalCase}} {{nameCamelCase}}) throws Exception {
         // Create a new {{nameCamelCase}} via {{namePascalCase}}Service
         return {{nameCamelCase}}Service.create{{namePascalCase}}({{nameCamelCase}});
     }
 
-    @PutMapping("/{{nameCamelCase}}/{id}")
+    @PutMapping("/{{namePlural}}/{id}")
     public {{namePascalCase}} update{{namePascalCase}}(@PathVariable {{#keyFieldDescriptor}}{{className}} {{nameCamelCase}}{{/keyFieldDescriptor}}, @RequestBody {{namePascalCase}} {{nameCamelCase}}) throws Exception {
         // Update an existing {{nameCamelCase}} via {{namePascalCase}}Service
         return {{nameCamelCase}}Service.update{{namePascalCase}}({{nameCamelCase}});
     }
 
-    @DeleteMapping("/{{nameCamelCase}}/{id}")
+    @DeleteMapping("/{{namePlural}}/{id}")
     public void delete{{namePascalCase}}(@PathVariable {{#keyFieldDescriptor}}{{className}} {{nameCamelCase}}{{/keyFieldDescriptor}}) throws Exception {
         // Delete a {{nameCamelCase}} via {{namePascalCase}}Service
         {{nameCamelCase}}Service.delete{{namePascalCase}}({{#keyFieldDescriptor}}{{nameCamelCase}}{{/keyFieldDescriptor}});
@@ -60,7 +60,7 @@ public class {{namePascalCase}}Controller {
     {{#commands}}
     {{#if isExtendedVerb}}
     {{#checkMethod controllerInfo.method}}
-    @RequestMapping(value = {"{{#aggregate}}{{nameCamelCase}}{{/aggregate}}/{id}/{{#if controllerInfo.apiPath}}{{controllerInfo.apiPath}}{{else}}{{#changeLowerCase nameCamelCase}}{{/changeLowerCase}}{{/if}}","/{{#aggregate}}{{namePlural}}{{/aggregate}}/{id}/{{#if controllerInfo.apiPath}}{{controllerInfo.apiPath}}{{else}}{{#changeLowerCase nameCamelCase}}{{/changeLowerCase}}{{/if}}"}, method = RequestMethod.{{#controllerInfo}}{{method}}{{/controllerInfo}}, produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = {"{{#aggregate}}{{namePlural}}{{/aggregate}}/{id}/{{#if controllerInfo.apiPath}}{{controllerInfo.apiPath}}{{else}}{{#changeLowerCase nameCamelCase}}{{/changeLowerCase}}{{/if}}","/{{#aggregate}}{{namePlural}}{{/aggregate}}/{id}/{{#if controllerInfo.apiPath}}{{controllerInfo.apiPath}}{{else}}{{#changeLowerCase nameCamelCase}}{{/changeLowerCase}}{{/if}}"}, method = RequestMethod.{{#controllerInfo}}{{method}}{{/controllerInfo}}, produces = "application/json;charset=UTF-8")
     public {{#aggregate}}{{namePascalCase}}{{/aggregate}} {{nameCamelCase}}(        
         @PathVariable(value = "id") {{../keyFieldDescriptor.className}} {{../keyFieldDescriptor.nameCamelCase}},
         @RequestBody {{namePascalCase}}Command {{nameCamelCase}}Command,
@@ -73,7 +73,7 @@ public class {{namePascalCase}}Controller {
     }
     {{/checkMethod}}
     {{^checkMethod controllerInfo.method}}
-    @RequestMapping(value = "{{#aggregate}}{{nameCamelCase}}{{/aggregate}}", method = RequestMethod.{{#controllerInfo}}{{method}}{{/controllerInfo}}, produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = "{{#aggregate}}{{namePlural}}{{/aggregate}}", method = RequestMethod.{{#controllerInfo}}{{method}}{{/controllerInfo}}, produces = "application/json;charset=UTF-8")
     public {{#aggregate}}{{namePascalCase}}{{/aggregate}} {{nameCamelCase}}(        
         @RequestBody {{namePascalCase}}Command {{nameCamelCase}}Command,
         HttpServletRequest request,
