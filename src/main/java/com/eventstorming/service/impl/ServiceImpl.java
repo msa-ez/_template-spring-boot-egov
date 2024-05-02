@@ -84,27 +84,19 @@ public class {{namePascalCase}}ServiceImpl extends EgovAbstractServiceImpl imple
             {{../nameCamelCase}}Repository.save({{../nameCamelCase}});   
         */
         
-        /** Option 1-2:  implement logic here        
         Optional<{{../namePascalCase}}> optional{{../namePascalCase}} = {{../nameCamelCase}}Repository.findById({{nameCamelCase}}Command.get{{../namePascalCase}}Id());
 
         if (optional{{../namePascalCase}}.isPresent()) {
             {{../namePascalCase}} {{../nameCamelCase}} = optional{{../namePascalCase}}.get();
             
             // business Logic....
+            {{../namePascalCase}}.{{nameCamelCase}}({{nameCamelCase}}Command);
             {{../nameCamelCase}}Repository.save({{../nameCamelCase}});
 
             return {{../nameCamelCase}};
         } else {
             throw processException("info.nodata.msg");
         }
-       
-
-        /** Option 2:  call the domain method of the {{../namePascalCase}}.   
-        return {{../namePascalCase}}.{{nameCamelCase}}({{nameCamelCase}}Command);
-           */  
-
-           
-        return null;
     }
     {{/if}}
     {{/commands}}
